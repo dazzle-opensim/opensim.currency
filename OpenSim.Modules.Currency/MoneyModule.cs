@@ -770,17 +770,14 @@ namespace OpenSim.Modules.Currency
 
 
 		//
-		private void OnEconomyDataRequest(UUID agentId)
+		private void OnEconomyDataRequest(IClientAPI client)
 		{
 			//m_log.InfoFormat("[MONEY]: OnEconomyDataRequest:");
-
-			IClientAPI user = GetLocateClient(agentId);
-
-			if (user!=null)
+            if (client!=null)
 			{
-				Scene s = GetLocateScene(user.AgentId);
+				Scene s = (Scene)client.Scene;
 
-				user.SendEconomyData(EnergyEfficiency, s.RegionInfo.ObjectCapacity, ObjectCount, PriceEnergyUnit, PriceGroupCreate,
+				client.SendEconomyData(EnergyEfficiency, s.RegionInfo.ObjectCapacity, ObjectCount, PriceEnergyUnit, PriceGroupCreate,
 									 PriceObjectClaim, PriceObjectRent, PriceObjectScaleFactor, PriceParcelClaim, PriceParcelClaimFactor,
 									 PriceParcelRent, PricePublicObjectDecay, PricePublicObjectDelete, PriceRentLight, PriceUpload,
 									 TeleportMinPrice, TeleportPriceExponent);
